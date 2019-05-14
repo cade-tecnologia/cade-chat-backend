@@ -30,7 +30,7 @@
     "@types/morgan": "^1.7.35",
     "@types/node": "^11.13.4",
     "@types/socket.io": "^2.1.2",
-    "snyk": "^1.163.1",
+    "snyk": "^1.164.0",
     "ts-node-dev": "^1.0.0-pre.32",
     "tslint": "^5.15.0",
     "typescript": "^3.4.3"

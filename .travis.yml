@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+  - '10.15.1'
+cache:
+  directories:
+    - node_module
+branches:
+  only:
+    - development
+script:
+  - npm run test-modules
+  - npm run lint
+  - npm run build
+deploy:
+  provider: heroku
+  app: cade-chat-backend
+  api_key: $HEROKU_TOKE
+  skip_cleanup: true
+  local_dir: dist/
+  on:
+    repo: cade-tecnologia/cade-chat-backend
+    branch: development
+after_deploy:
+  - snyk monitor
+notifications:
+  email: false
