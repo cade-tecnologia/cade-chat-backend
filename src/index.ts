@@ -6,10 +6,10 @@ config();
 import server from './server';
 import { CreateSocket } from './socket/create-socket.main';
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 
 // @ts-ignore
-const serverCreated = server.listen(8080, () => {
+const serverCreated = server.listen(process.env.PORT, () => {
   console.log('\n----------------------');
   console.log(`SERVER RUNNING ON\nhttp://localhost:${ port }`);
   console.log('ENVIRONMENT --> ', process.env.NODE_ENV);
