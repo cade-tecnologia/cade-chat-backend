@@ -30,6 +30,6 @@ export class MessageEvent {
   };
 
   private sendAll = async (): Promise<void> => {
-    this.socket.emit('sendMessage', await MessageController.getAllMessage());
+    this.socket.emit('sendAllMessage', await MessageController.getAllMessage());
   }
 }
