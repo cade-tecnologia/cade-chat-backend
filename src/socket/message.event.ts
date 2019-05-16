@@ -26,10 +26,13 @@ export class MessageEvent {
   private receive = (): void => {
     this.socket.on('receiveMessage', async (socket: Socket) => {
       await MessageController.saveMessage(Object.assign({} as Message, socket));
+      this.socket.emit('receiveAllMessage', await MessageController.getAllMessage())
     })
   };
 
   private sendAll = async (): Promise<void> => {
-    this.socket.emit('sendAllMessage', await MessageController.getAllMessage());
+    this.socket.on('getAllMessage', async () => {
+      this.socket.emit('receiveAllMessage', await MessageController.getAllMessage())
+    });
   }
 }

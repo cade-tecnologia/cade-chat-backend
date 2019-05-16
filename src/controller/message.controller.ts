@@ -12,6 +12,7 @@ import MessageSchema from '../schema/message.schema';
  */
 export class MessageController {
   public static saveMessage = async (msg: Message): Promise<void> => {
+    console.log('MSG', msg);
     try {
       await MessageSchema.create(msg);
     } catch (e) {
