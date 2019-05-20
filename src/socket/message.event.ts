@@ -25,6 +25,8 @@ export class MessageEvent {
 
   private receive = (): void => {
     this.socket.on('receiveMessage', async (socket: Socket) => {
+      this.socket.broadcast.emit('sendMessage', socket)
+      this.socket.emit('sendMessage', socket)
       await MessageController.saveMessage(Object.assign({} as Message, socket));
       this.socket.emit('receiveAllMessage', await MessageController.getAllMessage())
     })
