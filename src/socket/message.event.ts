@@ -1,6 +1,7 @@
 import { Socket } from 'socket.io';
 import { Message } from '../model/message.model';
 import { MessageController } from '../controller/message.controller';
+import SocketEventUtil from '../util/socket-event.util';
 
 /**
  * - Class
@@ -20,21 +21,17 @@ export class MessageEvent {
     this.socket = socket;
 
     this.receive();
-    this.sendAll();
   }
 
   private receive = (): void => {
-    this.socket.on('receiveMessage', async (socket: Socket) => {
-      this.socket.broadcast.emit('sendMessage', socket)
-      this.socket.emit('sendMessage', socket)
+    this.socket.on(SocketEventUtil.RECEIVE, async (socket: Socket) => {
+      this.sendRecentMsg(socket);
       await MessageController.saveMessage(Object.assign({} as Message, socket));
-      this.socket.emit('receiveAllMessage', await MessageController.getAllMessage())
     })
   };
 
-  private sendAll = async (): Promise<void> => {
-    this.socket.on('getAllMessage', async () => {
-      this.socket.emit('receiveAllMessage', await MessageController.getAllMessage())
-    });
-  }
+  private sendRecentMsg = (socket: Socket): void => {
+    this.socket.broadcast.emit(SocketEventUtil.RECENT_MESSAGE, socket);
+    this.socket.emit(SocketEventUtil.RECENT_MESSAGE, socket);
+  };
 }
