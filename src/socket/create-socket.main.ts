@@ -11,7 +11,7 @@ export class CreateSocket {
       path: '/socket.io',
       origins: [
         'http://localhost:4200',
-        'https://cade-chat.web.app/bash',
+        'https://cade-chat.web.app',
       ],
     });
     this.mainConnect();
