@@ -34,12 +34,7 @@ class Server {
 
   private middleware(): void {
     this.express.use(helmet());
-    this.express.use(cors({
-      origin: [
-        'http://localhost:4200',
-        'https://cade-chat.web.app',
-      ],
-    }));
+    this.express.use(cors());
     this.express.use(express.json());
     this.express.use(LOGGER('dev'))
   }
