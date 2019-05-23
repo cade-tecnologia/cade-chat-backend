@@ -25,13 +25,13 @@ export class MessageEvent {
 
   private receive = (): void => {
     this.socket.on(SocketEventUtil.RECEIVE, async (socket: Socket) => {
-      this.sendRecentMsg(socket);
-      await MessageController.saveMessage(Object.assign({} as Message, socket));
+      const msg = await MessageController.saveMessage(Object.assign({} as Message, socket));
+      this.sendRecentMsg(msg!);
     })
   };
 
-  private sendRecentMsg = (socket: Socket): void => {
-    this.socket.broadcast.emit(SocketEventUtil.RECENT_MESSAGE, socket);
-    this.socket.emit(SocketEventUtil.RECENT_MESSAGE, socket);
+  private sendRecentMsg = (message: Message): void => {
+    this.socket.broadcast.emit(SocketEventUtil.RECENT_MESSAGE, message);
+    this.socket.emit(SocketEventUtil.RECENT_MESSAGE, message);
   };
 }

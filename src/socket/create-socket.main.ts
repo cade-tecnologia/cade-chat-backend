@@ -9,6 +9,10 @@ export class CreateSocket {
   constructor(io: http.Server) {
     this.io = SocketIo.listen(io, {
       path: '/socket.io',
+      origins: [
+        'http://localhost:4200',
+        'https://cade-chat-backend.herokuapp.com/',
+      ],
     });
     this.mainConnect();
   }

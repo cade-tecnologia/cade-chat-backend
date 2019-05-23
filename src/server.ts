@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { connect, set } from 'mongoose';
 import LOGGER from 'morgan';
+import routes from './routes';
 
 class Server {
   public express: express.Application;
@@ -12,6 +13,7 @@ class Server {
 
     this.database();
     this.middleware();
+    this.routes();
   }
 
   private async database(): Promise<void> {
@@ -35,10 +37,15 @@ class Server {
     this.express.use(cors({
       origin: [
         'http://localhost:4200',
+        'https://cade-chat-backend.herokuapp.com/',
       ],
     }));
     this.express.use(express.json());
     this.express.use(LOGGER('dev'))
+  }
+
+  private routes(): void {
+    this.express.use(routes)
   }
 }
 

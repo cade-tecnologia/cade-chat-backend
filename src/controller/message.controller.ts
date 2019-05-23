@@ -1,3 +1,4 @@
+import { Response, Request } from 'express';
 import { Message } from '../model/message.model';
 import MessageSchema from '../schema/message.schema';
 
@@ -11,20 +12,22 @@ import MessageSchema from '../schema/message.schema';
  * and business logic
  */
 export class MessageController {
-  public static saveMessage = async (msg: Message): Promise<void> => {
-    console.log('MSG', msg);
+  public static saveMessage = async (msg: Message): Promise<Message | undefined> => {
     try {
-      await MessageSchema.create(msg);
+      return await MessageSchema.create(msg);
     } catch (e) {
       console.trace(e);
     }
   };
 
-  public static getAllMessage = async (): Promise<Message[] | undefined> => {
+  // @ts-ignore
+  public static getAllMessage = async (req: Request, res: Response): Promise<Response> => {
     try {
-      return await MessageSchema.find()
+      const msg = await MessageSchema.find();
+      return res.status(200).json(msg);
     } catch (e) {
       console.trace(e);
+      return res.status(500).json(ServerErrorMessageUtil.INTERNAL_ERROR);
     }
   };
 }
