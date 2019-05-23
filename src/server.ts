@@ -37,7 +37,7 @@ class Server {
     this.express.use(cors({
       origin: [
         'http://localhost:4200',
-        'https://cade-chat-backend.herokuapp.com/',
+        'https://cade-chat.web.app/bash',
       ],
     }));
     this.express.use(express.json());
