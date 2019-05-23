@@ -23,7 +23,12 @@ export class MessageController {
   // @ts-ignore
   public static getAllMessage = async (req: Request, res: Response): Promise<Response> => {
     try {
-      const msg = await MessageSchema.find();
+      // @ts-ignore
+      const msg = await MessageSchema.paginate({}, {
+        page: req.query.page,
+        limit: req.query.limit,
+        sort: { createdAt: -1},
+      });
       return res.status(200).json(msg);
     } catch (e) {
       console.trace(e);

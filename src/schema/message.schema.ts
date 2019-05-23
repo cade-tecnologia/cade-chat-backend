@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import Paginate from 'mongoose-paginate-v2';
 import { Message } from '../model/message.model';
 
 const MessageSchema: Schema = new Schema<Message>({
@@ -14,8 +15,10 @@ const MessageSchema: Schema = new Schema<Message>({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    required: true,
   },
 });
+
+MessageSchema.plugin(Paginate);
 
 export default model<Message>('Message', MessageSchema);
